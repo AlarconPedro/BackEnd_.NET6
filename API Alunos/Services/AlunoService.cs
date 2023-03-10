@@ -1,43 +1,42 @@
 ﻿using API_Alunos.Context;
 using API_Alunos.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
 namespace API_Alunos.Services;
 
 public class AlunoService : IAlunoService
 {
-    private readonly AppDbContext _context;
+    private readonly SouMaisFitContext _context;
 
-    public AlunoService(AppDbContext context)
+    public AlunoService(SouMaisFitContext context)
     {
         _context = context;
     }
 
     //POST
-    public async Task AddAluno(Aluno aluno)
+    public async Task AddAluno(TbAluno aluno)
     {
-        _context.Alunos.Add(aluno);
+        _context.TbAlunos.Add(aluno);
         await _context.SaveChangesAsync();
     }
 
     //GET
-    public async Task<IEnumerable<Aluno>> GetAlunos()
+    public async Task<IEnumerable<TbAluno>> GetAlunos(int skip = 0, int take = 10)
     {
-        return await _context.Alunos.ToListAsync();
+        return await _context.TbAlunos.Skip(skip).Take(take).ToListAsync();
     }
 
-    public async Task<Aluno> GetAlunoById(int id)
+    public async Task<TbAluno> GetAlunoById(int id)
     {
-        return await _context.Alunos.FindAsync(id);
+        return await _context.TbAlunos.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Aluno>> GetAlunoByNome(string nome)
+    public async Task<IEnumerable<TbAluno>> GetAlunoByNome(string nome)
     {
-        IEnumerable<Aluno> alunos;
+        IEnumerable<TbAluno> alunos;
         if(!string.IsNullOrEmpty(nome))
         {
-            alunos = await _context.Alunos.Where(n => n.Nome.Contains(nome)).ToListAsync();
+            alunos = await _context.TbAlunos.Where(n => n.AluNome.Contains(nome)).ToListAsync();
         } else
         {
             alunos = await GetAlunos();
@@ -46,16 +45,16 @@ public class AlunoService : IAlunoService
     }
 
     //UPDATE
-    public async Task UpdateAluno(Aluno aluno)
+    public async Task UpdateAluno(TbAluno aluno)
     {
         _context.Entry(aluno).State = EntityState.Modified;
         await _context.SaveChangesAsync();
     }
 
     //DELETE
-    public async Task DeleteAluno(Aluno aluno)
+    public async Task DeleteAluno(TbAluno aluno)
     {
-        _context.Alunos.Remove(aluno);
+        _context.TbAlunos.Remove(aluno);
         await _context.SaveChangesAsync();
     }
 }

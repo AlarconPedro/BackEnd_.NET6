@@ -5,18 +5,18 @@ namespace API_Alunos.Services;
 public interface IAlunoService
 {
     //GET
-    Task<IEnumerable<Aluno>> GetAlunos();
+    Task<IEnumerable<TbAluno>> GetAlunos(int skip, int take);
 
-    Task<Aluno> GetAlunoById(int id);
+    Task<TbAluno> GetAlunoById(int id);
 
-    Task<IEnumerable<Aluno>> GetAlunoByNome(string nome);
+    Task<IEnumerable<TbAluno>> GetAlunoByNome(string nome);
 
     //POST
-    Task AddAluno(Aluno aluno);
+    Task AddAluno(TbAluno aluno);
 
     //PUT
-    Task UpdateAluno(Aluno aluno);
+    Task UpdateAluno(TbAluno aluno);
 
     //DELETE
-    Task DeleteAluno(Aluno aluno);
+    Task DeleteAluno(TbAluno aluno);
 }

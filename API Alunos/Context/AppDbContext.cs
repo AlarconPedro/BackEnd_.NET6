@@ -12,4 +12,5 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
     }
 
     public DbSet<Aluno> Alunos { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }
 }
