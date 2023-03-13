@@ -28,20 +28,6 @@ namespace API_Alunos.Controller
             }
         }
 
-        [HttpGet("{id:int}", Name = "GetTreinador")]
-        public async Task<ActionResult<TbTreinador>> GetTreinadorById(int id)
-        {
-            try
-            {
-                var treinador = await _treinadorService.GetTreinadorById(id);
-                return treinador == null ? NotFound($"Não foi possível encontrar nenhum treinador com o id {id} !") : Ok(treinador);
-            }
-            catch
-            {
-                return BadRequest("Parâmetro Inválido!");
-            }
-        }
-
         [HttpGet("{nome}")]
         public async Task<ActionResult<IAsyncEnumerable<TbTreinador>>> GetAlunoByNome(string nome)
         {
@@ -49,6 +35,20 @@ namespace API_Alunos.Controller
             {
                 var treinador = await _treinadorService.GetTreinadorByNome(nome);
                 return treinador == null ? NotFound($"Não foi possível encontrar nenhum treinador com o nome {nome} !") : Ok(treinador);
+            }
+            catch
+            {
+                return BadRequest("Parâmetro Inválido!");
+            }
+        }
+
+        [HttpGet("{id:int}", Name = "GetTreinador")]
+        public async Task<ActionResult<TbTreinador>> GetTreinadorById(int id)
+        {
+            try
+            {
+                var treinador = await _treinadorService.GetTreinadorById(id);
+                return treinador == null ? NotFound($"Não foi possível encontrar nenhum treinador com o id {id} !") : Ok(treinador);
             }
             catch
             {

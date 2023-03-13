@@ -63,7 +63,8 @@ namespace API_Alunos.Controller
             try
             {
                 await _alunoService.AddAluno(aluno);
-                return CreatedAtRoute(nameof(GetAluno), new { id = aluno.AluId }, aluno);
+                //return CreatedAtRoute(nameof(GetAluno), new { id = aluno.AluId }, aluno);
+                return Ok("Aluno Adicionado com Sucesso !");
             }
             catch
             {
