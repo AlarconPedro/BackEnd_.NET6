@@ -1,5 +1,5 @@
 ﻿using API_Alunos.Models;
-using API_Alunos.Services;
+using API_Alunos.Services.Aluno;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_Alunos.Controller
@@ -73,11 +73,11 @@ namespace API_Alunos.Controller
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> UpdateAluno(string id, [FromBody] TbAluno aluno)
+        public async Task<ActionResult> UpdateAluno(int id, [FromBody] TbAluno aluno)
         {
             try
             {
-                if (aluno.AluId == id)
+                if (aluno.AluCodigo == id)
                 {
                     await _alunoService.UpdateAluno(aluno);
                     return Ok($"O Aluno de id {id} foi atualizado com sucesso!");

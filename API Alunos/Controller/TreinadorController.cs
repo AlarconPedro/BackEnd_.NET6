@@ -1,5 +1,5 @@
 ﻿using API_Alunos.Models;
-using API_Alunos.Services;
+using API_Alunos.Services.Treinador;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_Alunos.Controller

@@ -2,7 +2,7 @@
 using API_Alunos.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace API_Alunos.Services;
+namespace API_Alunos.Services.Treinador;
 
 public class TreinadorService : ITreinadorService
 {
@@ -34,10 +34,11 @@ public class TreinadorService : ITreinadorService
     public async Task<IEnumerable<TbTreinador>> GetTreinadorByNome(string nome)
     {
         IEnumerable<TbTreinador> treinadores;
-        if(!string.IsNullOrEmpty(nome))
+        if (!string.IsNullOrEmpty(nome))
         {
             treinadores = await _context.TbTreinadors.Where(n => n.TreNome.Contains(nome)).ToListAsync();
-        } else
+        }
+        else
         {
             treinadores = await GetTreinadores();
         }

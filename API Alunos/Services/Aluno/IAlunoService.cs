@@ -1,6 +1,6 @@
 ﻿using API_Alunos.Models;
 
-namespace API_Alunos.Services;
+namespace API_Alunos.Services.Aluno;
 
 public interface IAlunoService
 {

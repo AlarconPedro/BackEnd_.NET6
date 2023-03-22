@@ -2,7 +2,7 @@
 using API_Alunos.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace API_Alunos.Services;
+namespace API_Alunos.Services.Aluno;
 
 public class AlunoService : IAlunoService
 {
@@ -34,10 +34,11 @@ public class AlunoService : IAlunoService
     public async Task<IEnumerable<TbAluno>> GetAlunoByNome(string nome)
     {
         IEnumerable<TbAluno> alunos;
-        if(!string.IsNullOrEmpty(nome))
+        if (!string.IsNullOrEmpty(nome))
         {
             alunos = await _context.TbAlunos.Where(n => n.AluNome.Contains(nome)).ToListAsync();
-        } else
+        }
+        else
         {
             alunos = await GetAlunos();
         }

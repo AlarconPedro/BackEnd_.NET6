@@ -1,6 +1,6 @@
 ﻿using API_Alunos.Models;
 
-namespace API_Alunos.Services;
+namespace API_Alunos.Services.Treinador;
 
 public interface ITreinadorService
 {
@@ -17,5 +17,5 @@ public interface ITreinadorService
 
     //DELETE
     Task DeleteTreinador(TbTreinador treinador);
-    
+
 }
