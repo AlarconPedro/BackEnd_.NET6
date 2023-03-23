@@ -2,6 +2,9 @@ using API_Alunos.Context;
 using API_Alunos.Services.Aluno;
 using API_Alunos.Services.Desafio;
 using API_Alunos.Services.Evento;
+using API_Alunos.Services.Medalha;
+using API_Alunos.Services.Medalhas;
+using API_Alunos.Services.Modalidades;
 using API_Alunos.Services.Treinador;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +41,8 @@ builder.Services.AddScoped<IAlunoService, AlunoService>();
 builder.Services.AddScoped<ITreinadorService, TreinadorService>();
 builder.Services.AddScoped<IDesafioService, DesafioService>();
 builder.Services.AddScoped<IEventoService, EventoService>();
+builder.Services.AddScoped<IMedalhaService, MedalhaSevice>();
+builder.Services.AddScoped<IModalidadeSevice, ModalidadeService>();
 
 
 builder.Services.AddControllers();
