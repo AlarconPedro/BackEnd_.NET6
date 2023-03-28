@@ -8,6 +8,7 @@ public interface IDesafioService
     Task<IEnumerable<TbDesafio>> GetDesafios(int skip, int take);
     Task<IEnumerable<TbDesafio>> GetDesafioByNome(string nome);
     Task<TbDesafio> GetDesafioById(int id);
+    Task<int> GetAlunoDesafioBy(int id);
     //POST
     Task AddDesafio(TbDesafio desafio);
     //PUT
