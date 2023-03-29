@@ -26,6 +26,11 @@ public class AlunoService : IAlunoService
         return await _context.TbAlunos.Skip(skip).Take(take).ToListAsync();
     }
 
+    public async Task<IEnumerable<TbAluno>> GetAlunosOneSignal()
+    {
+        return await _context.TbAlunos.ToListAsync();
+    }
+
     public async Task<TbAluno> GetAlunoById(int id)
     {
         return await _context.TbAlunos.FindAsync(id);

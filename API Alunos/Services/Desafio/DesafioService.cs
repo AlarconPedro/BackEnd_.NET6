@@ -16,9 +16,10 @@ public class DesafioService : IDesafioService
     }
 
     public async Task<IEnumerable<TbDesafio>> GetDesafios(int skip, int take) =>
-       //await _context.TbDesafios.Skip(skip).Take(take).ToListAsync();
-       await _context.TbDesafios.FromSqlRaw("SELECT d.DesCodigo, COUNT(a.AluDesCodigo) AS Total FROM TbDesafio d, TbAlunoDesafio a WHERE d.DesCodigo = a.DesCodigo group by d.DesCodigo").ToListAsync();
-
+       await _context.TbDesafios.Skip(skip).Take(take).ToListAsync();
+       //await _context.TbDesafios.FromSqlRaw("SELECT d.DesCodigo, COUNT(a.AluDesCodigo) AS Total FROM TbDesafio d, TbAlunoDesafio a WHERE d.DesCodigo = a.DesCodigo group by d.DesCodigo").ToListAsync();
+       //await _context.TbAlunoDesafios.GroupJoin(_context.TbDesafios, a => a.DesCodigo, d => d.DesCodigo, (a, d) => new { a, d }).SelectMany(x => x.d.DefaultIfEmpty(), (a, d) => new { a, d }).GroupBy(x => x.d.DesCodigo).Select(x => new { x.Key, Total = x.Count() }).ToListAsync();
+        
     public async Task<TbDesafio> GetDesafioById(int id) =>
         await _context.TbDesafios.FindAsync(id);
 

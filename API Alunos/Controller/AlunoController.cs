@@ -28,7 +28,21 @@ namespace API_Alunos.Controller
             }
         }
 
-        [HttpGet("{nome}")]
+        [HttpGet]
+        [Route("/oneSignal")]
+        public async Task<ActionResult<IEnumerable<TbAluno>>> GetAlunosOneSignal()
+        {
+            try
+            {
+                return Ok(await _alunoService.GetAlunosOneSignal());
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao buscar Alunos!");
+            }
+        }
+
+    [HttpGet("{nome}")]
         public async Task<ActionResult<IAsyncEnumerable<TbAluno>>> GetAlunoByNome(string nome)
         {
             try

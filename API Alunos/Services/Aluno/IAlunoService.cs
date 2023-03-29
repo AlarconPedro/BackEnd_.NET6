@@ -6,6 +6,7 @@ public interface IAlunoService
 {
     //GET
     Task<IEnumerable<TbAluno>> GetAlunos(int skip, int take);
+    Task<IEnumerable<TbAluno>> GetAlunosOneSignal();
 
     Task<TbAluno> GetAlunoById(int id);
 
