@@ -58,6 +58,7 @@ public class MedalhaController : ControllerBase
         }
     }
 
+
     [HttpPost]
     public async Task<ActionResult> AddMedalha(TbMedalha medalha)
     {

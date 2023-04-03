@@ -42,6 +42,7 @@ builder.Services.AddScoped<ITreinadorService, TreinadorService>();
 builder.Services.AddScoped<IDesafioService, DesafioService>();
 builder.Services.AddScoped<IEventoService, EventoService>();
 builder.Services.AddScoped<IMedalhaService, MedalhaSevice>();
+builder.Services.AddScoped<IMedalhaNivelService, MedalhaNivelService>();
 builder.Services.AddScoped<IModalidadeSevice, ModalidadeService>();
 
 
