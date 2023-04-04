@@ -23,7 +23,8 @@ public class AlunoService : IAlunoService
     //GET
     public async Task<IEnumerable<TbAluno>> GetAlunos(int skip = 0, int take = 10)
     {
-        return await _context.TbAlunos.Skip(skip).Take(take).ToListAsync();
+        var result = await _context.TbAlunos.Skip(skip).Take(take).ToListAsync();
+        return result.OrderBy(x => x.AluNome);
     }
 
     public async Task<IEnumerable<TbAluno>> GetAlunosOneSignal()
@@ -47,7 +48,7 @@ public class AlunoService : IAlunoService
         {
             alunos = await GetAlunos();
         }
-        return alunos;
+        return alunos.OrderBy(x => x.AluNome);
     }
 
     //UPDATE
