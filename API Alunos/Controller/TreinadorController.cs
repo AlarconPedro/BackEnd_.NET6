@@ -71,16 +71,16 @@ namespace API_Alunos.Controller
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<TbTreinador>> UpdateTreinador(string id, [FromBody] TbTreinador treinador)
+        public async Task<ActionResult<TbTreinador>> UpdateTreinador(int id, [FromBody] TbTreinador treinador)
         {
             try
             {
-                if (treinador.TreId == id)
+                if (treinador.TreCodigo == id)
                 {
                     await _treinadorService.UpdateTreinador(treinador);
                     return Ok($"O Treinador de id {id} foi atualizado com sucesso!");
                 }
-                return BadRequest($"Dados Inconsistentes!, o id {id} deve ser o mesmo do treinador {treinador.TreId}.");
+                return BadRequest($"Dados Inconsistentes!, o id {id} deve ser o mesmo do treinador {treinador.TreCodigo}.");
             }
             catch
             {

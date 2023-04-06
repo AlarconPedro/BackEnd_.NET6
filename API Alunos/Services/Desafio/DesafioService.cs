@@ -15,11 +15,22 @@ public class DesafioService : IDesafioService
         _context = context;
     }
 
-    public async Task<IEnumerable<TbDesafio>> GetDesafios(int skip, int take) =>
-       await _context.TbDesafios.Skip(skip).Take(take).ToListAsync();
-       //await _context.TbDesafios.FromSqlRaw("SELECT d.DesCodigo, COUNT(a.AluDesCodigo) AS Total FROM TbDesafio d, TbAlunoDesafio a WHERE d.DesCodigo = a.DesCodigo group by d.DesCodigo").ToListAsync();
-       //await _context.TbAlunoDesafios.GroupJoin(_context.TbDesafios, a => a.DesCodigo, d => d.DesCodigo, (a, d) => new { a, d }).SelectMany(x => x.d.DefaultIfEmpty(), (a, d) => new { a, d }).GroupBy(x => x.d.DesCodigo).Select(x => new { x.Key, Total = x.Count() }).ToListAsync();
-        
+    /*    public async Task<IEnumerable<TbDesafio>> GetDesafios(int skip, int take) =>
+           await _context.TbDesafios.Skip(skip).Take(take).ToListAsync();
+           //await _context.TbDesafios.FromSqlRaw("SELECT d.DesCodigo, COUNT(a.AluDesCodigo) AS Total FROM TbDesafio d, TbAlunoDesafio a WHERE d.DesCodigo = a.DesCodigo group by d.DesCodigo").ToListAsync();
+           //await _context.TbAlunoDesafios.GroupJoin(_context.TbDesafios, a => a.DesCodigo, d => d.DesCodigo, (a, d) => new { a, d }).SelectMany(x => x.d.DefaultIfEmpty(), (a, d) => new { a, d }).GroupBy(x => x.d.DesCodigo).Select(x => new { x.Key, Total = x.Count() }).ToListAsync();
+            */
+    public async Task<IEnumerable<AluDesafio>> GetDesafios(int skip, int take) =>
+
+        await _context.TbDesafios.CountAsync() > 0 ? await _context.TbDesafios.Skip(skip).Take(take).Select(d => new AluDesafio
+        {
+            DesCodigo = d.DesCodigo,
+            DesNome = d.DesNome,
+            DesDataInicio = d.DesDataInicio,
+            DesDataFim = d.DesDataFim,
+            DesImagem = d.DesImagem,
+            Total = _context.TbAlunoDesafios.Where(a => a.DesCodigo == d.DesCodigo).Count()
+        }).ToListAsync() : null;
     public async Task<TbDesafio> GetDesafioById(int id) =>
         await _context.TbDesafios.FindAsync(id);
 
