@@ -28,6 +28,19 @@ public class DesafioController : ControllerBase
         }
     }
 
+    [HttpGet("alunos/{id:int}")]
+    public async Task<ActionResult<IEnumerable<AluDesafio>>> GetAlunoDesafio(int id)
+    {
+        try
+        {
+            return Ok(await _desafioService.GetAlunoDesafio(id));
+        }
+        catch
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao buscar Desafios!");
+        }
+    }
+
     [HttpGet("{nome}")]
     public async Task<ActionResult<IAsyncEnumerable<TbDesafio>>> GetDesafioByNome(string nome)
     {

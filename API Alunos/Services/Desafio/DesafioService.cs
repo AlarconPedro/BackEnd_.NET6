@@ -20,9 +20,8 @@ public class DesafioService : IDesafioService
            //await _context.TbDesafios.FromSqlRaw("SELECT d.DesCodigo, COUNT(a.AluDesCodigo) AS Total FROM TbDesafio d, TbAlunoDesafio a WHERE d.DesCodigo = a.DesCodigo group by d.DesCodigo").ToListAsync();
            //await _context.TbAlunoDesafios.GroupJoin(_context.TbDesafios, a => a.DesCodigo, d => d.DesCodigo, (a, d) => new { a, d }).SelectMany(x => x.d.DefaultIfEmpty(), (a, d) => new { a, d }).GroupBy(x => x.d.DesCodigo).Select(x => new { x.Key, Total = x.Count() }).ToListAsync();
             */
-    public async Task<IEnumerable<AluDesafio>> GetDesafios(int skip, int take) =>
-
-        await _context.TbDesafios.CountAsync() > 0 ? await _context.TbDesafios.Skip(skip).Take(take).Select(d => new AluDesafio
+    public async Task<IEnumerable<DesafioQuantidade>> GetDesafios(int skip, int take) =>
+        await _context.TbDesafios.CountAsync() > 0 ? await _context.TbDesafios.Skip(skip).Take(take).Select(d => new DesafioQuantidade
         {
             DesCodigo = d.DesCodigo,
             DesNome = d.DesNome,
@@ -31,11 +30,17 @@ public class DesafioService : IDesafioService
             DesImagem = d.DesImagem,
             Total = _context.TbAlunoDesafios.Where(a => a.DesCodigo == d.DesCodigo).Count()
         }).ToListAsync() : null;
+
+    public async Task<IEnumerable<AluDesafio>> GetAlunoDesafio(int id) =>
+    await _context.TbAlunos.Join(_context.TbAlunoDesafios, a => a.AluCodigo, ad => ad.AluCodigo, (a, ad) => new { a, ad }).Join(_context.TbDesafios, ad => ad.ad.DesCodigo, d => d.DesCodigo, (ad, d) => new { ad, d }).Where(x => x.d.DesCodigo == id).Select(x => new AluDesafio 
+    {
+        AluNome = x.ad.a.AluNome,
+        AluCodigo = x.ad.a.AluCodigo,
+        AluImagem = x.ad.a.AluImagem,
+    }).ToListAsync();
+
     public async Task<TbDesafio> GetDesafioById(int id) =>
         await _context.TbDesafios.FindAsync(id);
-
-    public async Task<int> GetAlunoDesafioBy(int id) =>
-        await _context.TbAlunoDesafios.FromSqlRaw("SELECT AluDesCodigo FROM TbAlunoDesafio WHERE DesCodigo = {0} ", id).CountAsync();
 
     public async Task<IEnumerable<TbDesafio>> GetDesafioByNome(string nome) =>
         await _context.TbDesafios.Where(n => n.DesNome.Contains(nome)).ToListAsync();

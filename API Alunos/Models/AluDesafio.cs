@@ -2,17 +2,7 @@
 
 public class AluDesafio
 {
-    public int DesCodigo { get; set; }
-
-    public string? DesNome { get; set; }
-
-    public DateTime? DesDataInicio { get; set; }
-
-    public DateTime? DesDataFim { get; set; }
-
-    public string? DesImagem { get; set; }
-
-    public string? DesId { get; set; }
-
-    public int? Total { get; set; }
+    public int AluCodigo { get; set; }
+    public string AluNome{ get; set; }
+    public string? AluImagem { get; set; }
 }

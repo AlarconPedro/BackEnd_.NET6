@@ -12,8 +12,17 @@ public class EventoService : IEventoService
         _context = context;
     }
 
-    public async Task<IEnumerable<TbEvento>> GetEventos(int skip, int take) =>
-        await _context.TbEventos.Skip(skip).Take(take).ToListAsync();
+    public async Task<IEnumerable<AluEvento>> GetEventos(int skip, int take) =>
+        await _context.TbEventos.Skip(skip).Take(take).Select(e => new AluEvento
+        {
+            EveCodigo = e.EveCodigo,
+            EveNome = e.EveNome,
+            EveDataInicio = e.EveDataInicio,
+            EveDataFim = e.EveDataFim,
+            EveImagem = e.EveImagem,
+            EveExclusivoAluno = e.EveExclusivoAluno,
+            Total = _context.TbAlunoEventos.Where(a => a.EveCodigo == e.EveCodigo).Count()
+        }).ToListAsync();
 
     public async Task<IEnumerable<TbEvento>> GetEventsByNome(string nome) =>
         await _context.TbEventos.Where(n => n.EveNome.Contains(nome)).ToListAsync();

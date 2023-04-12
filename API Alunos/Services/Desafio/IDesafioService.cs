@@ -5,10 +5,10 @@ namespace API_Alunos.Services.Desafio;
 public interface IDesafioService
 {
     //GET
-    Task<IEnumerable<AluDesafio>> GetDesafios(int skip, int take);
+    Task<IEnumerable<DesafioQuantidade>> GetDesafios(int skip, int take);
+    Task<IEnumerable<AluDesafio>> GetAlunoDesafio(int id);
     Task<IEnumerable<TbDesafio>> GetDesafioByNome(string nome);
     Task<TbDesafio> GetDesafioById(int id);
-    Task<int> GetAlunoDesafioBy(int id);
     //POST
     Task AddDesafio(TbDesafio desafio);
     //PUT
