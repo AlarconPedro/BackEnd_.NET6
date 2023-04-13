@@ -12,8 +12,8 @@ public class EventoService : IEventoService
         _context = context;
     }
 
-    public async Task<IEnumerable<AluEvento>> GetEventos(int skip, int take) =>
-        await _context.TbEventos.Skip(skip).Take(take).Select(e => new AluEvento
+    public async Task<IEnumerable<EventoQuantidade>> GetEventos(int skip, int take) =>
+        await _context.TbEventos.Skip(skip).Take(take).Select(e => new EventoQuantidade
         {
             EveCodigo = e.EveCodigo,
             EveNome = e.EveNome,
@@ -23,6 +23,17 @@ public class EventoService : IEventoService
             EveExclusivoAluno = e.EveExclusivoAluno,
             Total = _context.TbAlunoEventos.Where(a => a.EveCodigo == e.EveCodigo).Count()
         }).ToListAsync();
+
+    public async Task<IEnumerable<AluEvento>> GetEventoParticipantes(int id) =>
+        await _context.TbAlunos.Join(_context.TbAlunoEventos, a => a.AluCodigo, ae => ae.AluCodigo, (a, ae) => new {a, ae})
+            .Join(_context.TbEventos, ae => ae.ae.EveCodigo, e => e.EveCodigo, (ae, e) => new {ae, e})
+            .Where(x => x.e.EveCodigo == id)
+            .Select(x => new AluEvento
+            {
+                AluCodigo = x.ae.a.AluCodigo,
+                AluNome = x.ae.a.AluNome,
+                AluImagem = x.ae.a.AluImagem,
+            }).ToListAsync();
 
     public async Task<IEnumerable<TbEvento>> GetEventsByNome(string nome) =>
         await _context.TbEventos.Where(n => n.EveNome.Contains(nome)).ToListAsync();

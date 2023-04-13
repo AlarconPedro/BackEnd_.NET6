@@ -5,8 +5,9 @@ namespace API_Alunos.Services.Evento;
 public interface IEventoService
 {
     //GET
-    Task<IEnumerable<AluEvento>> GetEventos(int skip, int take);
+    Task<IEnumerable<EventoQuantidade>> GetEventos(int skip, int take);
     Task<IEnumerable<TbEvento>> GetEventsByNome(string nome);
+    Task<IEnumerable<AluEvento>> GetEventoParticipantes(int id);
     Task<TbEvento> GetEventoById(int id);
     //POST
     Task AddEvento(TbEvento evento);

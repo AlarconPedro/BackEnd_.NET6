@@ -28,6 +28,20 @@ public class EventoController : ControllerBase
         }
     }
 
+    [HttpGet("alunos/{id:int}")]
+    public async Task<ActionResult<IEnumerable<AluEvento>>> GetEventoParticipantes(int id)
+    {
+        try
+        {
+            var evento = await _eventoService.GetEventoParticipantes(id);
+            return evento == null ? NotFound($"Não foi possível encontrar nenhum evento com o id {id}") : Ok(evento);
+        }
+        catch
+        {
+            return BadRequest("Parâmetro Inválido!");
+        }
+    }
+
     [HttpGet("{nome}")]
     public async Task<ActionResult<IEnumerable<TbEvento>>> GetEventosByNome(string nome)
     {

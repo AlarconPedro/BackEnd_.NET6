@@ -32,12 +32,15 @@ public class DesafioService : IDesafioService
         }).ToListAsync() : null;
 
     public async Task<IEnumerable<AluDesafio>> GetAlunoDesafio(int id) =>
-    await _context.TbAlunos.Join(_context.TbAlunoDesafios, a => a.AluCodigo, ad => ad.AluCodigo, (a, ad) => new { a, ad }).Join(_context.TbDesafios, ad => ad.ad.DesCodigo, d => d.DesCodigo, (ad, d) => new { ad, d }).Where(x => x.d.DesCodigo == id).Select(x => new AluDesafio 
-    {
-        AluNome = x.ad.a.AluNome,
-        AluCodigo = x.ad.a.AluCodigo,
-        AluImagem = x.ad.a.AluImagem,
-    }).ToListAsync();
+    await _context.TbAlunos.Join(_context.TbAlunoDesafios, a => a.AluCodigo, ad => ad.AluCodigo, (a, ad) => new { a, ad })
+        .Join(_context.TbDesafios, ad => ad.ad.DesCodigo, d => d.DesCodigo, (ad, d) => new { ad, d })
+        .Where(x => x.d.DesCodigo == id)
+        .Select(x => new AluDesafio 
+        {
+            AluNome = x.ad.a.AluNome,
+            AluCodigo = x.ad.a.AluCodigo,
+            AluImagem = x.ad.a.AluImagem,
+        }).ToListAsync();
 
     public async Task<TbDesafio> GetDesafioById(int id) =>
         await _context.TbDesafios.FindAsync(id);
