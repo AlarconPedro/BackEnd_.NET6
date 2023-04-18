@@ -32,7 +32,23 @@ public class AlunoService : IAlunoService
         return await _context.TbAlunos.ToListAsync();
     }
 
-    public async Task<TbAluno> GetAlunoById(int id)
+    public async Task<IEnumerable<AluAtividade>> GetAtividadesAluno(int id) =>
+        await _context.TbModalidades
+            .Join(_context.TbAlunoAtividades, m => m.ModCodigo, aa => aa.ModCodigo, (m, aa) => new {m, aa})
+            .Join(_context.TbAlunoAtividadeImagems, aa => aa.aa.AluAtiCodigo, ai => ai.AluAtiCodigo, (aa, ai) => new {aa, ai})
+            .Where(x => x.aa.aa.AluCodigo == id)
+            .Select(x => new AluAtividade
+            {
+                ModCodigo = x.aa.m.ModCodigo,
+                ModNome = x.aa.m.ModNome,
+                AluAtiDataHora = x.aa.aa.AluAtiDataHora,
+                AluAtiMedida = x.aa.aa.AluAtiMedida,
+                AluAtiDuracaoSeg = x.aa.aa.AluAtiDuracaoSeg,
+                AluAtiIntensidade = x.aa.aa.AluAtiIntensidade,
+                AluAtiImgImagem = x.ai.AluAtiImgImagem
+            }).ToListAsync();
+
+public async Task<TbAluno> GetAlunoById(int id)
     {
         return await _context.TbAlunos.FindAsync(id);
     }
