@@ -42,11 +42,37 @@ namespace API_Alunos.Controller
         }
 
         [HttpGet("atividades/{id:int}")]
-        public async Task<ActionResult<IEnumerable<AluAtividade>>> GetAlunosAtividade(int id)
+        public async Task<ActionResult<IEnumerable<AluAtividade>>> GetAlunosAtividade(int id, [FromQuery] int skip = 0, [FromQuery] int take = 10)
         {
             try
             {
-                return Ok(await _alunoService.GetAtividadesAluno(id));
+                return Ok(await _alunoService.GetAtividadesAluno(id, skip, take));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao buscar Alunos!");
+            }
+        }
+
+        [HttpGet("atividades/{id:int}/{nome}")]
+        public async Task<ActionResult<IEnumerable<AluAtividade>>> GetAlunosAtividadeByNome(int id, string nome, [FromQuery] int skip = 0, [FromQuery] int take = 10)
+        {
+            try
+            {
+                return Ok(await _alunoService.GetAtividadesAlunoByNome(id, nome, skip, take));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao buscar Alunos!");
+            }
+        }
+
+        [HttpGet("atividades/imagens/{id:int}")]
+        public async Task<ActionResult<IEnumerable<AluAtiImagem>>> GetImagensAlunoAtividade(int id)
+        {
+            try
+            {
+                return Ok(await _alunoService.GetImagensAlunoAtividade(id));
             }
             catch
             {

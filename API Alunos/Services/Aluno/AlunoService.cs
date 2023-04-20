@@ -32,23 +32,37 @@ public class AlunoService : IAlunoService
         return await _context.TbAlunos.ToListAsync();
     }
 
-    public async Task<IEnumerable<AluAtividade>> GetAtividadesAluno(int id) =>
+    public async Task<IEnumerable<AluAtividade>> GetAtividadesAluno(int id, int skip = 0, int take = 10) =>
         await _context.TbModalidades
             .Join(_context.TbAlunoAtividades, m => m.ModCodigo, aa => aa.ModCodigo, (m, aa) => new {m, aa})
-            .Join(_context.TbAlunoAtividadeImagems, aa => aa.aa.AluAtiCodigo, ai => ai.AluAtiCodigo, (aa, ai) => new {aa, ai})
-            .Where(x => x.aa.aa.AluCodigo == id)
+            .Where(x => x.aa.AluCodigo == id)
+            .Skip(skip).Take(take)
             .Select(x => new AluAtividade
             {
-                ModCodigo = x.aa.m.ModCodigo,
-                ModNome = x.aa.m.ModNome,
-                AluAtiDataHora = x.aa.aa.AluAtiDataHora,
-                AluAtiMedida = x.aa.aa.AluAtiMedida,
-                AluAtiDuracaoSeg = x.aa.aa.AluAtiDuracaoSeg,
-                AluAtiIntensidade = x.aa.aa.AluAtiIntensidade,
-                AluAtiImgImagem = x.ai.AluAtiImgImagem
-            }).ToListAsync();
+                ModCodigo = x.m.ModCodigo,
+                ModNome = x.m.ModNome,
+                AluAtiDataHora = x.aa.AluAtiDataHora,
+                AluAtiMedida = x.aa.AluAtiMedida,
+                AluAtiDuracaoSeg = x.aa.AluAtiDuracaoSeg,
+                AluAtiIntensidade = x.aa.AluAtiIntensidade,
+            }).OrderByDescending(x => x.AluAtiDataHora).ToListAsync();
 
-public async Task<TbAluno> GetAlunoById(int id)
+    public async Task<IEnumerable<AluAtividade>> GetAtividadesAlunoByNome(int id, string nome, int skip = 0, int take = 10) => 
+        await _context.TbModalidades
+            .Join(_context.TbAlunoAtividades, m => m.ModCodigo, aa => aa.ModCodigo, (m, aa) => new {m, aa})
+            .Where(x => x.aa.AluCodigo == id && x.m.ModNome.Contains(nome))
+            .Skip(skip).Take(take)
+            .Select(x => new AluAtividade
+            {
+                ModCodigo = x.m.ModCodigo,
+                ModNome = x.m.ModNome,
+                AluAtiDataHora = x.aa.AluAtiDataHora,
+                AluAtiMedida = x.aa.AluAtiMedida,
+                AluAtiDuracaoSeg = x.aa.AluAtiDuracaoSeg,
+                AluAtiIntensidade = x.aa.AluAtiIntensidade,
+            }).OrderByDescending(x => x.AluAtiDataHora).ToListAsync();
+
+    public async Task<TbAluno> GetAlunoById(int id)
     {
         return await _context.TbAlunos.FindAsync(id);
     }
@@ -65,6 +79,18 @@ public async Task<TbAluno> GetAlunoById(int id)
             alunos = await GetAlunos();
         }
         return alunos.OrderBy(x => x.AluNome);
+    }
+
+    public async Task<IEnumerable<AluAtiImagem>> GetImagensAlunoAtividade(int id)
+    {
+        return await _context.TbAlunoAtividadeImagems
+            .Join(_context.TbAlunoAtividades, ai => ai.AluAtiCodigo, aa => aa.AluAtiCodigo, (ai, aa) => new {ai, aa})
+            .Where(x => x.aa.AluCodigo == id)
+            .Select(x => new AluAtiImagem
+            {
+                AluAtiImgImagem = x.ai.AluAtiImgImagem,
+                AluAtiImgDescricao = x.ai.AluAtiImgDescricao,
+            }).ToListAsync();    
     }
 
     //UPDATE

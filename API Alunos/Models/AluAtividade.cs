@@ -8,5 +8,4 @@ public class AluAtividade
     public double? AluAtiMedida { get; set; }
     public int? AluAtiDuracaoSeg { get; set; }
     public int? AluAtiIntensidade { get; set; }
-    public string? AluAtiImgImagem { get; set; }
 }
