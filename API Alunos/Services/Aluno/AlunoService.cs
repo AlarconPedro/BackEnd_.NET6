@@ -42,6 +42,7 @@ public class AlunoService : IAlunoService
                 ModCodigo = x.m.ModCodigo,
                 ModNome = x.m.ModNome,
                 AluAtiDataHora = x.aa.AluAtiDataHora,
+                AluAtiCodigo = x.aa.AluAtiCodigo,
                 AluAtiMedida = x.aa.AluAtiMedida,
                 AluAtiDuracaoSeg = x.aa.AluAtiDuracaoSeg,
                 AluAtiIntensidade = x.aa.AluAtiIntensidade,
@@ -57,6 +58,7 @@ public class AlunoService : IAlunoService
                 ModCodigo = x.m.ModCodigo,
                 ModNome = x.m.ModNome,
                 AluAtiDataHora = x.aa.AluAtiDataHora,
+                AluAtiCodigo = x.aa.AluAtiCodigo,
                 AluAtiMedida = x.aa.AluAtiMedida,
                 AluAtiDuracaoSeg = x.aa.AluAtiDuracaoSeg,
                 AluAtiIntensidade = x.aa.AluAtiIntensidade,
@@ -85,10 +87,11 @@ public class AlunoService : IAlunoService
     {
         return await _context.TbAlunoAtividadeImagems
             .Join(_context.TbAlunoAtividades, ai => ai.AluAtiCodigo, aa => aa.AluAtiCodigo, (ai, aa) => new {ai, aa})
-            .Where(x => x.aa.AluCodigo == id)
+            .Where(x => x.aa.AluAtiCodigo == id)
             .Select(x => new AluAtiImagem
             {
                 AluAtiImgImagem = x.ai.AluAtiImgImagem,
+                AluAtiImgCodigo = x.ai.AluAtiImgCodigo,
                 AluAtiImgDescricao = x.ai.AluAtiImgDescricao,
             }).ToListAsync();    
     }
