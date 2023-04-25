@@ -83,6 +83,20 @@ public class DesafioController : ControllerBase
         }
     }
 
+    [HttpGet("Modalidades/{DesCodigo:int}/{ModCodigo:int}")]
+    public async Task<ActionResult<DesafioModalidade>> GetDesafioModalidadeById(int DesCodigo, int ModCodigo)
+    {
+        try
+        {
+            var desafio = await _desafioService.GetDesafioModalidadeById(DesCodigo, ModCodigo);
+            return desafio == null ? NotFound($"Não foi possível encontrar nenhum desafio com o id {DesCodigo} !") : Ok(desafio);
+        }
+        catch
+        {
+            return BadRequest("Parâmetro Inválido!");
+        }
+    }
+
     [HttpPost]
     public async Task<ActionResult<TbDesafio>> AddDesafio(TbDesafio desafio)
     {
