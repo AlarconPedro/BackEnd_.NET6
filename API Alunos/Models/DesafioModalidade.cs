@@ -3,4 +3,5 @@
 public class DesafioModalidade
 {
     public string? ModNome { get; set; }
+
 }

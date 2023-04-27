@@ -83,17 +83,30 @@ public class DesafioController : ControllerBase
         }
     }
 
-    [HttpGet("Modalidades/{DesCodigo:int}/{ModCodigo:int}")]
-    public async Task<ActionResult<DesafioModalidade>> GetDesafioModalidadeById(int DesCodigo, int ModCodigo)
+    /* [HttpGet("Modalidades/{DesCodigo:int}/{ModCodigo:int}")]
+     public async Task<ActionResult<DesafioModalidade>> GetDesafioModalidadeById(int DesCodigo, int ModCodigo)
+     {
+         try
+         {
+             var desafio = await _desafioService.GetDesafioModalidadeById(DesCodigo, ModCodigo);
+             return desafio == null ? NotFound($"Não foi possível encontrar nenhum desafio com o id {DesCodigo} !") : Ok(desafio);
+         }
+         catch
+         {
+             return BadRequest("Parâmetro Inválido!");
+         }
+     }*/
+
+    [HttpGet("Modalidades/{id:int}")]
+    public async Task<ActionResult<IEnumerable<DesafioModalidade>>> GetModalidadeById(int id)
     {
         try
         {
-            var desafio = await _desafioService.GetDesafioModalidadeById(DesCodigo, ModCodigo);
-            return desafio == null ? NotFound($"Não foi possível encontrar nenhum desafio com o id {DesCodigo} !") : Ok(desafio);
+            return Ok(await _desafioService.GetModalidadeById(id));
         }
         catch
         {
-            return BadRequest("Parâmetro Inválido!");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao buscar Desafios!");
         }
     }
 

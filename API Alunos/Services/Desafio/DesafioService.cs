@@ -48,14 +48,23 @@ public class DesafioService : IDesafioService
     public async Task<IEnumerable<TbDesafio>> GetDesafioByNome(string nome) =>
         await _context.TbDesafios.Where(n => n.DesNome.Contains(nome)).ToListAsync();
 
-    public async Task<DesafioModalidade> GetDesafioModalidadeById(int DesCodigo, int ModCodigo) =>
+/*    public async Task<DesafioModalidade> GetDesafioModalidadeById(int DesCodigo, int ModCodigo) =>
          await _context.TbDesafios.Join(_context.TbDesafioModalidades, d => d.DesCodigo, dm => dm.DesCodigo, (d, dm) => new { d, dm })
             .Join(_context.TbModalidades, dm => dm.dm.ModCodigo, m => m.ModCodigo, (dm, m) => new { dm, m })
             .Where(x => x.dm.d.DesCodigo == DesCodigo && x.dm.dm.ModCodigo == ModCodigo)
             .Select(x => new DesafioModalidade
             {
                 ModNome = x.m.ModNome
-            }).FirstOrDefaultAsync();
+            }).FirstOrDefaultAsync();*/
+    public async Task<IEnumerable<DesafioModalidade>> GetModalidadeById(int desCodigo) =>
+        await _context.TbModalidades.Join(_context.TbDesafioModalidades, m => m.ModCodigo, dm => dm.ModCodigo, (m, dm) => new { m, dm })
+            .Join(_context.TbDesafios, dm => dm.dm.DesCodigo, d => d.DesCodigo, (dm, d) => new { dm, d })
+            .Where(x => x.d.DesCodigo == desCodigo)
+            .Select(x => new DesafioModalidade
+            {
+                ModNome = x.dm.m.ModNome
+            }).ToListAsync();
+
 
     public async Task AddDesafio(TbDesafio desafio)
     {
