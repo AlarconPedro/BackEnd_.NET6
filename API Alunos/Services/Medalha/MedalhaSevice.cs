@@ -26,6 +26,15 @@ public class MedalhaSevice : IMedalhaService
         //await _context.TbMedalhaNivels.Where(n => n.NivCodigo == id).Select(m => m.MedCodigoNavigation).ToListAsync();
        //await _context.TbMedalhaNivels.Where(n => n.MedCodigo == id).Select(m => m.MedCodigoNavigation).ToListAsync();
        await _context.TbMedalhaNivels.Where(n => n.MedCodigo == id).ToListAsync();
+
+    public async Task<IEnumerable<MedalhaModalidade>> GetModalidadeMedalha(int id) =>
+        await _context.TbModalidades
+        .Join(_context.TbMedalhaModalidades, m => m.ModCodigo, mm => mm.ModCodigo, (m, mm) => new { m, mm })
+        .Where(x => x.mm.MedCodigo == id)
+        .Select(s => new MedalhaModalidade
+        {
+            ModNome = s.m.ModNome
+        }).ToListAsync();
     public async Task PostMedalha(TbMedalha medalha)
     {
         _context.TbMedalhas.Add(medalha);

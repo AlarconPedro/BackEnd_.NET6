@@ -13,6 +13,7 @@ public interface IDesafioService
     Task<TbDesafio> GetDesafioById(int id);
     //POST
     Task AddDesafio(TbDesafio desafio);
+    Task AddAlunoDesafio(TbAlunoDesafio alunoDesafio);
     //PUT
     Task UpdateDesafio(TbDesafio desafio);
     //DELETE

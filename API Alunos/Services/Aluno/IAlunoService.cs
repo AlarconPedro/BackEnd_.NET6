@@ -8,6 +8,7 @@ public interface IAlunoService
     Task<IEnumerable<TbAluno>> GetAlunos(int skip, int take);
     Task<IEnumerable<TbAluno>> GetAlunosOneSignal();
     Task<IEnumerable<AluAtividade>> GetAtividadesAluno(int id, int skip, int take);
+    Task<TbAlunoAtividade> GetAtividadeById(int id);
     Task<IEnumerable<AluAtividade>> GetAtividadesAlunoByNome(int id, string nome, int skip, int take);
     Task<IEnumerable<AluAtiImagem>> GetImagensAlunoAtividade(int id);
     Task<TbAluno> GetAlunoById(int id);

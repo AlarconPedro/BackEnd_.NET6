@@ -46,7 +46,10 @@ public class AlunoService : IAlunoService
                 AluAtiMedida = x.aa.AluAtiMedida,
                 AluAtiDuracaoSeg = x.aa.AluAtiDuracaoSeg,
                 AluAtiIntensidade = x.aa.AluAtiIntensidade,
+                Total = _context.TbAlunoAtividades.Where(y => y.AluAtiCodigo == x.aa.AluCodigo).Count()
             }).OrderByDescending(x => x.AluAtiDataHora).ToListAsync();
+
+    public async Task<TbAlunoAtividade> GetAtividadeById(int id) => await _context.TbAlunoAtividades.Where(x => x.AluAtiCodigo == id ).FirstAsync();
 
     public async Task<IEnumerable<AluAtividade>> GetAtividadesAlunoByNome(int id, string nome, int skip = 0, int take = 10) => 
         await _context.TbModalidades

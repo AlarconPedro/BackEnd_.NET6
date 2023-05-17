@@ -9,4 +9,5 @@ public class AluAtividade
     public double? AluAtiMedida { get; set; }
     public int? AluAtiDuracaoSeg { get; set; }
     public int? AluAtiIntensidade { get; set; }
+    public int? Total { get; set; }
 }

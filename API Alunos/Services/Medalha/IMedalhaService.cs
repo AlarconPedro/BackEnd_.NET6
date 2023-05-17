@@ -8,6 +8,7 @@ public interface IMedalhaService
     Task<IEnumerable<TbMedalha>> GetMedalhas(int skip, int take);
     Task<IEnumerable<TbMedalha>> GetMedalhaByName(string nome);
     Task<IEnumerable<TbMedalhaNivel>> GetMedalhaNivel(int id);
+    Task<IEnumerable<MedalhaModalidade>> GetModalidadeMedalha(int id);
     Task<TbMedalha> GetMedalhaById(int id);
     //POST
     Task PostMedalha(TbMedalha medalha);

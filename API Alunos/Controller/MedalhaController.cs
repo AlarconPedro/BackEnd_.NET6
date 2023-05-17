@@ -58,6 +58,19 @@ public class MedalhaController : ControllerBase
         }
     }
 
+    [HttpGet("modalidade/{id:int}")]
+    public async Task<ActionResult<IEnumerable<MedalhaModalidade>>> GetModalidadeMedalha(int id)
+    {
+        try
+        {
+            var modalidade = await _service.GetModalidadeMedalha(id);
+            return modalidade == null ? NotFound($"Não foi possível encontrar nenhuma modalidade com o id {id}") : Ok(modalidade);
+        }
+        catch
+        {
+            return BadRequest("Parâmetro Inválido!");
+        }
+    }
 
     [HttpPost]
     public async Task<ActionResult> AddMedalha(TbMedalha medalha)

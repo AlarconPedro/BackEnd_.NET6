@@ -71,6 +71,13 @@ public class DesafioService : IDesafioService
         _context.TbDesafios.Add(desafio);
         await _context.SaveChangesAsync();
     }
+
+    public async Task AddAlunoDesafio(TbAlunoDesafio alunoDesafio)
+    {
+        _context.TbAlunoDesafios.Add(alunoDesafio);
+        await _context.SaveChangesAsync();
+    }
+
     public async Task UpdateDesafio(TbDesafio desafio)
     {
         _context.TbDesafios.Entry(desafio).State = EntityState.Modified;

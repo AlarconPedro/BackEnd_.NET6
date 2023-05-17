@@ -128,6 +128,24 @@ public class DesafioController : ControllerBase
         }
     }
 
+    [HttpPost("Aluno/")]
+    public async Task<ActionResult<TbAlunoDesafio>> AddAlunoDesafio(TbAlunoDesafio alunoDesafio)
+    {
+        try
+        {
+            if (alunoDesafio == null)
+                return BadRequest();
+
+            await _desafioService.AddAlunoDesafio(alunoDesafio);
+            return Ok(alunoDesafio);
+            //return CreatedAtRoute(nameof(GetDesafioById), new { id = createdDesafio.IdDesafio }, createdDesafio);
+        }
+        catch
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao adicionar Aluno ao Desafio!");
+        }
+    }
+
     [HttpPut("{id:int}")]
     public async Task<ActionResult<TbDesafio>> UpdateDesafio(int id, TbDesafio desafio)
     {

@@ -41,7 +41,7 @@ namespace API_Alunos.Controller
             }
         }
 
-        [HttpGet("atividades/{id:int}")]
+        [HttpGet("atividades/alunoid/{id:int}")]
         public async Task<ActionResult<IEnumerable<AluAtividade>>> GetAlunosAtividade(int id, [FromQuery] int skip = 0, [FromQuery] int take = 10)
         {
             try
@@ -54,7 +54,21 @@ namespace API_Alunos.Controller
             }
         }
 
-        [HttpGet("atividades/{id:int}/{nome}")]
+        [HttpGet("atividades/{atividadeid:int}")]
+        public async Task<ActionResult<TbAlunoAtividade>> GetAtividadeById(int atividadeid)
+        {
+            try
+            {
+                var atividade = await _alunoService.GetAtividadeById(atividadeid);
+                return atividade == null ? NotFound($"Não foi possível encontrar nenhuma atividade com o id {atividadeid}") : Ok(atividade);
+            }
+            catch
+            {
+                return BadRequest("Parâmetro Inválido!");
+            }
+        }
+
+        [HttpGet("atividades/alunoid/{id:int}/{nome}")]
         public async Task<ActionResult<IEnumerable<AluAtividade>>> GetAlunosAtividadeByNome(int id, string nome, [FromQuery] int skip = 0, [FromQuery] int take = 10)
         {
             try
