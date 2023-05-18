@@ -21,10 +21,48 @@ public class AlunoService : IAlunoService
     }
 
     //GET
-    public async Task<IEnumerable<TbAluno>> GetAlunos(int skip = 0, int take = 10)
+    public async Task<IEnumerable<Alunos>> GetAlunos(int skip = 0, int take = 10)
     {
-        var result = await _context.TbAlunos.Skip(skip).Take(take).ToListAsync();
+        var result = await _context.TbAlunos.Skip(skip).Take(take)
+            .Select(x => new Alunos
+            {
+                AluCodigo = x.AluCodigo,
+                AluNome = x.AluNome,
+                AluDataNasc = x.AluDataNasc,
+                AluImagem = x.AluImagem,
+                AluFone = x.AluFone,
+                AluAtivo = x.AluAtivo,
+                Total = _context.TbAlunos.Count()
+            }).ToListAsync();
         return result.OrderBy(x => x.AluNome);
+    }
+
+    public async Task<TbAluno> GetAlunoById(int id)
+    {
+        return await _context.TbAlunos.FindAsync(id);
+    }
+
+    public async Task<IEnumerable<Alunos>> GetAlunoByNome(string nome)
+    {
+        IEnumerable<Alunos> alunos;
+        if (!string.IsNullOrEmpty(nome))
+        {
+            alunos = await _context.TbAlunos.Where(n => n.AluNome.Contains(nome)).Select(x => new Alunos
+            {
+                AluCodigo = x.AluCodigo,
+                AluNome = x.AluNome,
+                AluDataNasc = x.AluDataNasc,
+                AluImagem = x.AluImagem,
+                AluFone = x.AluFone,
+                AluAtivo = x.AluAtivo,
+                Total = _context.TbAlunos.Count()
+            }).ToListAsync();
+        }
+        else
+        {
+            alunos = await GetAlunos();
+        }
+        return alunos.OrderBy(x => x.AluNome);
     }
 
     public async Task<IEnumerable<TbAluno>> GetAlunosOneSignal()
@@ -66,25 +104,6 @@ public class AlunoService : IAlunoService
                 AluAtiDuracaoSeg = x.aa.AluAtiDuracaoSeg,
                 AluAtiIntensidade = x.aa.AluAtiIntensidade,
             }).OrderByDescending(x => x.AluAtiDataHora).ToListAsync();
-
-    public async Task<TbAluno> GetAlunoById(int id)
-    {
-        return await _context.TbAlunos.FindAsync(id);
-    }
-
-    public async Task<IEnumerable<TbAluno>> GetAlunoByNome(string nome)
-    {
-        IEnumerable<TbAluno> alunos;
-        if (!string.IsNullOrEmpty(nome))
-        {
-            alunos = await _context.TbAlunos.Where(n => n.AluNome.Contains(nome)).ToListAsync();
-        }
-        else
-        {
-            alunos = await GetAlunos();
-        }
-        return alunos.OrderBy(x => x.AluNome);
-    }
 
     public async Task<IEnumerable<AluAtiImagem>> GetImagensAlunoAtividade(int id)
     {
