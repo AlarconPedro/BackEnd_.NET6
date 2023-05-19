@@ -31,9 +31,9 @@ public partial class TbDesafio
 
     public DateTime? DesDataInicioExibicao { get; set; }
 
-    public virtual ICollection<TbAlunoDesafio> TbAlunoDesafios { get; } = new List<TbAlunoDesafio>();
+    public virtual ICollection<TbAlunoDesafio> TbAlunoDesafios { get; set; } = new List<TbAlunoDesafio>();
 
-    public virtual ICollection<TbDesafioModalidade> TbDesafioModalidades { get; } = new List<TbDesafioModalidade>();
+    public virtual ICollection<TbDesafioModalidade> TbDesafioModalidades { get; set; } = new List<TbDesafioModalidade>();
 
     public virtual TbTreinador? TreCodigoNavigation { get; set; }
 }

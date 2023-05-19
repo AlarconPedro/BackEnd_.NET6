@@ -19,6 +19,7 @@ public class EventoService : IEventoService
             EveNome = e.EveNome,
             EveDataInicio = e.EveDataInicio,
             EveDataFim = e.EveDataFim,
+            EveDataInicioExibicao = e.EveDataInicioExibicao,
             EveImagem = e.EveImagem,
             EveExclusivoAluno = e.EveExclusivoAluno,
             Total = _context.TbAlunoEventos.Where(a => a.EveCodigo == e.EveCodigo).Count()

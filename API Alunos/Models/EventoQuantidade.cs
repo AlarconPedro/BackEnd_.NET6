@@ -9,6 +9,7 @@ public class EventoQuantidade
         public DateTime? EveDataInicio { get; set; }
  
         public DateTime? EveDataFim { get; set; }
+        public DateTime? EveDataInicioExibicao { get; set; }
  
         public string? EveImagem { get; set; }
   

@@ -10,6 +10,8 @@ public class DesafioQuantidade
 
     public DateTime? DesDataFim { get; set; }
 
+    public DateTime? desDataInicioExibicao { get; set; }
+
     public string? DesImagem { get; set; }
 
     public string? DesId { get; set; }

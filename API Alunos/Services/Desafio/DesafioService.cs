@@ -43,7 +43,38 @@ public class DesafioService : IDesafioService
         }).ToListAsync();
 
     public async Task<TbDesafio> GetDesafioById(int id) =>
-        await _context.TbDesafios.FindAsync(id);
+        await _context.TbDesafios.Where(x => x.DesCodigo == id)
+        .Select(y => new TbDesafio
+        {
+            DesCodigo = y.DesCodigo,
+            DesNome = y.DesNome,
+            DesDataInicioExibicao = y.DesDataInicioExibicao,
+            DesDataFim = y.DesDataFim,
+            DesDescricao = y.DesDescricao,
+            DesExclusivoAluno = y.DesExclusivoAluno,
+            DesMedidaDesafio = y.DesMedidaDesafio,
+            DesTipoDesafio = y.DesTipoDesafio,
+            DesTipoMedida = y.DesTipoMedida,
+            DesDataInicio = y.DesDataInicio,
+            DesImagem = y.DesImagem,
+            DesId = y.DesId,
+            TreCodigo = y.TreCodigo,
+/*            TreCodigoNavigation = _context.TbTreinadors.Where(x => x.TreCodigo == y.TreCodigo).FirstOrDefault(),*/
+/*            TbAlunoDesafios = _context.TbAlunoDesafios.Where(x => x.DesCodigo == y.DesCodigo)
+                                                      .Select(xx => new TbAlunoDesafio
+                                                      {
+                                                          AluCodigo = xx.AluCodigo,
+                                                          DesCodigo = xx.DesCodigo,
+                                                          AluDesCodigo = xx.AluDesCodigo,
+                                                      }).ToList(),*/
+           /* TbDesafioModalidades = _context.TbDesafioModalidades.Where(x => x.DesCodigo == y.DesCodigo)
+                                                                .Select(xx => new TbDesafioModalidade
+                                                                {
+                                                                    DesCodigo = xx.DesCodigo,
+                                                                    ModCodigo = xx.ModCodigo,
+                                                                    DesModCodigo = xx.DesModCodigo,
+                                                                }).ToList(),*/
+        }).FirstOrDefaultAsync();
 
     public async Task<IEnumerable<TbDesafio>> GetDesafioByNome(string nome) =>
         await _context.TbDesafios.Where(n => n.DesNome.Contains(nome)).ToListAsync();
