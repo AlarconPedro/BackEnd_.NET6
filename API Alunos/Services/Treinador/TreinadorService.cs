@@ -1,6 +1,7 @@
 ﻿using API_Alunos.Context;
 using API_Alunos.Models;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 
 namespace API_Alunos.Services.Treinador;
 
@@ -16,6 +17,17 @@ public class TreinadorService : ITreinadorService
     //POST
     public async Task AddTreinador(TbTreinador treinador)
     {
+        string senhaEncoding = "";
+        System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
+        byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(treinador.TreSenha);
+        byte[] hash = md5.ComputeHash(inputBytes);
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        for (int i = 0; i < hash.Length; i++)
+        {
+            sb.Append(hash[i].ToString("X2"));
+        }
+        senhaEncoding = sb.ToString(); // Retorna senha criptografada 
+        treinador.TreSenha = senhaEncoding;
         _context.TbTreinadors.Add(treinador);
         await _context.SaveChangesAsync();
     }

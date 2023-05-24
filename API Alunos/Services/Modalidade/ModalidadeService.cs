@@ -13,8 +13,14 @@ public class ModalidadeService : IModalidadeSevice
         _context = context;
     }
 
-    public async Task<IEnumerable<TbModalidade>> GetModalidades(int skip, int take) => 
-        await _context.TbModalidades.Skip(skip).Take(take).ToListAsync();
+    public async Task<IEnumerable<Modalidade>> GetModalidades(int skip, int take) => 
+        await _context.TbModalidades.Skip(skip).Take(take).Select(m => new Modalidade
+        {
+            ModCodigo = m.ModCodigo,
+            ModNome = m.ModNome,
+            ModImagem = m.ModImagem,
+            Total = _context.TbModalidades.Count()
+        }).ToListAsync();
 
     public async Task<TbModalidade> GetModalidadeById(int id) => 
         await _context.TbModalidades.FindAsync(id);

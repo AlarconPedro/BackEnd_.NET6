@@ -11,7 +11,7 @@ public partial class TbMedalha
 
     public int? MedTipoDesafio { get; set; }
 
-    public virtual ICollection<TbMedalhaModalidade> TbMedalhaModalidades { get; } = new List<TbMedalhaModalidade>();
+    public virtual ICollection<TbMedalhaModalidade> TbMedalhaModalidades { get; set;  } = new List<TbMedalhaModalidade>();
 
-    public virtual ICollection<TbMedalhaNivel> TbMedalhaNivels { get; } = new List<TbMedalhaNivel>();
+    public virtual ICollection<TbMedalhaNivel> TbMedalhaNivels { get; set;  } = new List<TbMedalhaNivel>();
 }

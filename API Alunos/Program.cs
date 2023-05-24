@@ -2,6 +2,7 @@ using API_Alunos.Context;
 using API_Alunos.Services.Aluno;
 using API_Alunos.Services.Desafio;
 using API_Alunos.Services.Evento;
+using API_Alunos.Services.Login;
 using API_Alunos.Services.Medalha;
 using API_Alunos.Services.Medalhas;
 using API_Alunos.Services.Modalidades;
@@ -38,6 +39,7 @@ builder.Services.AddDbContext<SouMaisFitContext>(options => options.UseSqlServer
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IAlunoService, AlunoService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<ITreinadorService, TreinadorService>();
 builder.Services.AddScoped<IDesafioService, DesafioService>();
 builder.Services.AddScoped<IEventoService, EventoService>();

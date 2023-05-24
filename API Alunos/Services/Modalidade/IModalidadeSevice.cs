@@ -5,7 +5,7 @@ namespace API_Alunos.Services.Modalidades;
 public interface IModalidadeSevice
 {
     //GET
-    Task<IEnumerable<TbModalidade>> GetModalidades(int skip, int take);
+    Task<IEnumerable<Modalidade>> GetModalidades(int skip, int take);
     Task<IEnumerable<TbModalidade>> GetModalidadesByName(string nome);
     Task<TbModalidade> GetModalidadeById(int id);
     //POST
