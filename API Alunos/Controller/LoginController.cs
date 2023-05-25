@@ -15,13 +15,13 @@ public class LoginController : ControllerBase
         _loginService = loginService;
     }
 
-    [HttpGet]
-    public async Task<ActionResult> GetLogin(LoginSistema login)
+    [HttpGet("{email}/{senha}")]
+    public async Task<ActionResult<TbTreinador>> GetLogin(string email, string senha)
     {
         try
         {
-            await _loginService.Logar(login);
-            return Ok();
+            var response = await _loginService.Logar(email, senha);
+            return Ok(response);
         } catch
         {
             return BadRequest();

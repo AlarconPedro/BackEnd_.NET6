@@ -4,5 +4,5 @@ namespace API_Alunos.Services.Login;
 
 public interface ILoginService
 {
-    Task Logar(LoginSistema login);
+    Task<TbTreinador> Logar(string nome, string senha);
 }

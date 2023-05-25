@@ -13,13 +13,13 @@ public class LoginService : ILoginService
         _context = context;
     }
 
-    public async Task Logar(LoginSistema login)
+    public async Task<TbTreinador> Logar(string email, string senha)
     {
         string senhaEncoding = "";
         try
         {
             System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(login.Senha);
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(senha);
             byte[] hash = md5.ComputeHash(inputBytes);
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             for (int i = 0; i < hash.Length; i++)
@@ -27,18 +27,14 @@ public class LoginService : ILoginService
                 sb.Append(hash[i].ToString("X2"));
             }
             senhaEncoding = sb.ToString(); // Retorna senha criptografada 
-            login.Senha = senhaEncoding;
-            await _context.TbTreinadors
-            .Where(x => x.TreEmail == login.Email && x.TreSenha == login.Senha)
-            .Select(x => new LoginSistema
-            {
-                Email = x.TreEmail,
-                Senha = x.TreSenha,
-            }).FirstOrDefaultAsync();
+            senha = senhaEncoding;
         }
         catch (Exception)
         {
             senhaEncoding = ""; // Caso encontre erro retorna nulo
         }
+        return await _context.TbTreinadors
+                .Where(x => x.TreEmail == email && x.TreSenha == senha)
+                .FirstOrDefaultAsync();
     }
 }
