@@ -1,6 +1,8 @@
 ﻿using API_Alunos.Context;
 using API_Alunos.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 
 namespace API_Alunos.Services.Aluno;
 
@@ -18,6 +20,17 @@ public class AlunoService : IAlunoService
     {
         _context.TbAlunos.Add(aluno);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<string> AddImagemAluno([FromForm] ImagemAluno imagem)
+    {
+        var filePath = Path.Combine("Storage/Aluno", Guid.NewGuid() + imagem.AluImagem.FileName);
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await imagem.AluImagem.CopyToAsync(fileStream);
+        }
+
+        return filePath;
     }
 
     //GET

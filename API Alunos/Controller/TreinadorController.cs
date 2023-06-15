@@ -28,6 +28,19 @@ namespace API_Alunos.Controller
             }
         }
 
+        [HttpGet("treinadores/")]
+        public async Task<ActionResult<IEnumerable<Treinadores>>> GetTreinadoresCombo()
+        {
+            try
+            {
+                return Ok(await _treinadorService.GetTreinadoresCombo());
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao buscar Treinadores!");
+            }
+        }
+
         [HttpGet("{nome}")]
         public async Task<ActionResult<IAsyncEnumerable<TbTreinador>>> GetAlunoByNome(string nome)
         {

@@ -38,6 +38,15 @@ public class TreinadorService : ITreinadorService
         return await _context.TbTreinadors.Skip(skip).Take(take).ToListAsync();
     }
 
+    public async Task<IEnumerable<Treinadores>> GetTreinadoresCombo()
+    {
+        return await _context.TbTreinadors.Select(t => new Treinadores
+        {
+            Id = t.TreCodigo,
+            Nome = t.TreNome
+        }).ToListAsync();
+    }
+
     public async Task<TbTreinador> GetTreinadorById(int id)
     {
         return await _context.TbTreinadors.FindAsync(id);

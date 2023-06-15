@@ -16,6 +16,7 @@ public interface IAlunoService
 
     //POST
     Task AddAluno(TbAluno aluno);
+    Task<String> AddImagemAluno(ImagemAluno imagem);
 
     //PUT
     Task UpdateAluno(TbAluno aluno);

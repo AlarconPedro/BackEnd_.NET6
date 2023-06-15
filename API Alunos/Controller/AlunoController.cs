@@ -138,6 +138,23 @@ namespace API_Alunos.Controller
             }
         }
 
+        [HttpPost("imagemAluno/")]
+        public async Task<ActionResult> UploadImage([FromForm] ImagemAluno imagem)
+        {
+            if (imagem.AluImagem != null)
+            {
+                string caminho = await _alunoService.AddImagemAluno(imagem);
+                //return Ok("Imagem Adicionada com Sucesso ! - " + caminho);
+                return Ok(caminho);
+            }
+            else
+            {
+                return BadRequest("Parâmetro Inválido!");
+            } 
+ 
+        }
+
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult> UpdateAluno(int id, [FromBody] TbAluno aluno)
         {
