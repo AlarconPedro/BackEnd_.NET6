@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using API_Alunos.Models;
+using API_Alunos.Models.Aluno;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_Alunos.Context;

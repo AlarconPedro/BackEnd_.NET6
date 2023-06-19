@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Storage\Aluno\" />
+    <Folder Include="Storage\Treinador\" />
   </ItemGroup>
 
 </Project>

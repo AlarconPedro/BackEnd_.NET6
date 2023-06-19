@@ -1,4 +1,4 @@
-﻿namespace API_Alunos.Models;
+﻿namespace API_Alunos.Models.Aluno;
 
 public class AluAtividade
 {

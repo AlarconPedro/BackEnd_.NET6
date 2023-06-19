@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace API_Alunos.Models;
+namespace API_Alunos.Models.Aluno;
 
 public partial class TbAluno
 {

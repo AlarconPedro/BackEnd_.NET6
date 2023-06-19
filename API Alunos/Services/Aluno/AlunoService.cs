@@ -1,5 +1,6 @@
 ﻿using API_Alunos.Context;
 using API_Alunos.Models;
+using API_Alunos.Models.Aluno;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
@@ -22,8 +23,9 @@ public class AlunoService : IAlunoService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<string> AddImagemAluno([FromForm] ImagemAluno imagem)
+    public async Task<string> AddImagemAluno([FromForm] UploadImagemAluno imagem)
     {
+        /*var filePath = Path.Combine("Storage/Aluno", Guid.NewGuid() + imagem.AluImagem.FileName);*/
         var filePath = Path.Combine("Storage/Aluno", Guid.NewGuid() + imagem.AluImagem.FileName);
         using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
@@ -34,18 +36,19 @@ public class AlunoService : IAlunoService
     }
 
     //GET
-    public async Task<IEnumerable<Alunos>> GetAlunos(int skip = 0, int take = 10)
+    public async Task<IEnumerable<AlunoDadosBasico>> GetAlunos(int skip = 0, int take = 10)
     {
+        
         var result = await _context.TbAlunos.Skip(skip).Take(take)
-            .Select(x => new Alunos
-            {
-                AluCodigo = x.AluCodigo,
-                AluNome = x.AluNome,
-                AluDataNasc = x.AluDataNasc,
-                AluImagem = x.AluImagem,
-                AluFone = x.AluFone,
-                AluAtivo = x.AluAtivo,
-                Total = _context.TbAlunos.Count()
+            .Select(x => new AlunoDadosBasico
+               {
+                   AluAtivo = x.AluAtivo,
+                   AluCodigo = x.AluCodigo,
+                   AluDataNasc = x.AluDataNasc,
+                   AluImagem = x.AluImagem,
+                   AluFone = x.AluFone,
+                   AluNome = x.AluNome,
+                   Total = _context.TbAlunos.Count()
             }).ToListAsync();
         return result.OrderBy(x => x.AluNome);
     }
@@ -55,20 +58,24 @@ public class AlunoService : IAlunoService
         return await _context.TbAlunos.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Alunos>> GetAlunoByNome(string nome)
+    public async Task<IEnumerable<AlunoDadosBasico>> GetAlunoByNome(string nome)
     {
-        IEnumerable<Alunos> alunos;
+        IEnumerable<AlunoDadosBasico> alunos;
         if (!string.IsNullOrEmpty(nome))
         {
-            alunos = await _context.TbAlunos.Where(n => n.AluNome.Contains(nome)).Select(x => new Alunos
+            alunos = await _context.TbAlunos.Where(n => n.AluNome.Contains(nome)).Select(x => new AlunoDadosBasico
             {
-                AluCodigo = x.AluCodigo,
-                AluNome = x.AluNome,
-                AluDataNasc = x.AluDataNasc,
-                AluImagem = x.AluImagem,
-                AluFone = x.AluFone,
-                AluAtivo = x.AluAtivo,
-                Total = _context.TbAlunos.Count()
+               AluAtivo = x.AluAtivo,
+               AluCodigo = x.AluCodigo,
+               AluDataNasc = x.AluDataNasc,
+               AluImagem = x.AluImagem,
+               /*AluImagem = new AlunoImagem
+               {
+                   AluImagem = x.AluImagem
+               },*/
+               AluFone = x.AluFone,
+               AluNome = x.AluNome,
+               Total = _context.TbAlunos.Count()
             }).ToListAsync();
         }
         else

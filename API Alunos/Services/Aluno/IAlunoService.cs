@@ -1,13 +1,14 @@
 ﻿using API_Alunos.Models;
+using API_Alunos.Models.Aluno;
 
 namespace API_Alunos.Services.Aluno;
 
 public interface IAlunoService
 {
     //GET
-    Task<IEnumerable<Alunos>> GetAlunos(int skip, int take);
+    Task<IEnumerable<AlunoDadosBasico>> GetAlunos(int skip, int take);
     Task<TbAluno> GetAlunoById(int id);
-    Task<IEnumerable<Alunos>> GetAlunoByNome(string nome);
+    Task<IEnumerable<AlunoDadosBasico>> GetAlunoByNome(string nome);
     Task<IEnumerable<TbAluno>> GetAlunosOneSignal();
     Task<IEnumerable<AluAtividade>> GetAtividadesAluno(int id, int skip, int take);
     Task<TbAlunoAtividade> GetAtividadeById(int id);
@@ -16,7 +17,7 @@ public interface IAlunoService
 
     //POST
     Task AddAluno(TbAluno aluno);
-    Task<String> AddImagemAluno(ImagemAluno imagem);
+    Task<String> AddImagemAluno(UploadImagemAluno imagem);
 
     //PUT
     Task UpdateAluno(TbAluno aluno);

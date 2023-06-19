@@ -1,6 +1,8 @@
-﻿namespace API_Alunos.Models;
+﻿using API_Alunos.Models.Aluno;
 
-public class Alunos
+namespace API_Alunos.Models;
+
+public class AlunoDadosBasico
 {
     public int? AluCodigo { get; set; }
     public string? AluNome { get; set; }

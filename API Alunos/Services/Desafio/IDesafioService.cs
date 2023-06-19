@@ -1,4 +1,5 @@
 ﻿using API_Alunos.Models;
+using API_Alunos.Models.Aluno;
 
 namespace API_Alunos.Services.Desafio;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using API_Alunos.Models.Aluno;
 
 namespace API_Alunos.Models;
 

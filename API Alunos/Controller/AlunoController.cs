@@ -1,4 +1,5 @@
 ﻿using API_Alunos.Models;
+using API_Alunos.Models.Aluno;
 using API_Alunos.Services.Aluno;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +18,31 @@ namespace API_Alunos.Controller
 
         [HttpGet]
         public async Task<ActionResult<IAsyncEnumerable<TbAluno>>> GetAluno([FromQuery] int skip = 0, [FromQuery] int take = 10)
-        {
+        {   
             try
             {
+                /*List<AlunoDadosBasico> listaAluno = new List<AlunoDadosBasico>();
+                var retorno = await _alunoService.GetAlunos(skip, take);
+                for (int i = 0; i < retorno.Count(); i++)
+                {
+                    if (retorno.ElementAt(i).AluImagem != null)
+                    {
+                        var dataBytes = System.IO.File.ReadAllBytes(retorno.ElementAt(i).AluImagem);
+                        listaAluno.Add(new AlunoDadosBasico
+                        {
+                            AluCodigo = retorno.ElementAt(i).AluCodigo,
+                            AluNome = retorno.ElementAt(i).AluNome,
+                            AluDataNasc = retorno.ElementAt(i).AluDataNasc,
+                            AluImagem = File(dataBytes, "image/png"),
+                            AluFone = retorno.ElementAt(i).AluFone,
+                            AluAtivo = retorno.ElementAt(i).AluAtivo,
+                            Total = retorno.ElementAt(i).Total
+                        });
+                    }
+                }
+                return Ok(listaAluno);*/
                 return Ok(await _alunoService.GetAlunos(skip, take));
+
             }
             catch
             {
@@ -139,7 +161,7 @@ namespace API_Alunos.Controller
         }
 
         [HttpPost("imagemAluno/")]
-        public async Task<ActionResult> UploadImage([FromForm] ImagemAluno imagem)
+        public async Task<ActionResult> UploadImage([FromForm] UploadImagemAluno imagem)
         {
             if (imagem.AluImagem != null)
             {

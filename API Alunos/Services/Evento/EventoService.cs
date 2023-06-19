@@ -1,5 +1,6 @@
 ﻿using API_Alunos.Context;
 using API_Alunos.Models;
+using API_Alunos.Models.Aluno;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_Alunos.Services.Evento;

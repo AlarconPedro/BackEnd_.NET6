@@ -1,4 +1,5 @@
 ﻿using API_Alunos.Models;
+using API_Alunos.Models.Aluno;
 using API_Alunos.Services.Evento;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
